@@ -1,0 +1,16 @@
+[Unit]
+Description=Bibliogram service
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=on-failure
+
+Environment=BIBLIOGRAM_DOCKERCOMPOSEFILE=docker-compose.yaml
+
+WorkingDirectory=/usr/local/bibliogram-docker
+ExecStart=/usr/local/bin/docker-compose -f ${BIBLIOGRAM_DOCKERCOMPOSEFILE} up --remove-orphans
+ExecStop=/usr/local/bin/docker-compose -f ${BIBLIOGRAM_DOCKERCOMPOSEFILE} down
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,42 @@
+version: '3.7'
+services:
+  bibliogram:
+    container_name: bibliogram
+    image: quay.io/pussthecatorg/bibliogram:latest
+    ports:
+      - "127.0.0.1:10407:10407"
+    volumes:
+      - "./db/:/app/db/"
+      - "./config.js:/app/config.js"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges
+    cap_drop:
+      - ALL
+    networks:
+      - bibliogram
+
+  caddy:
+    container_name: caddy
+    image: caddy:2-alpine
+    network_mode: host
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data:rw
+      - caddy-config:/config:rw
+    environment:
+      - BIBLIOGRAM_HOSTNAME=${BIBLIOGRAM_HOSTNAME:-http://localhost:80}
+      - BIBLIOGRAM_TLS=${LETSENCRYPT_EMAIL:-internal}
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+      - DAC_OVERRIDE
+
+networks:
+  bibliogram:
+    ipam:
+      driver: default
+volumes:
+  caddy-data:
+  caddy-config:
