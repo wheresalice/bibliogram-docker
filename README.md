@@ -18,7 +18,7 @@ Create a new Bibliogram instance in minutes using Docker
   git clone https://github.com/wheresalice/bibliogram-docker.git
   cd bibliogram-docker
   ```
-- Edit the [.env](https://github.com/wheresalice/bibliogram-docker/blob/master/.env) file to set the hostname and an email- Edit the [.env](https://github.com/wheresalice/bibliogram-docker/blob/master/.env) file to set the hostname and an email
+- Edit the [.env](https://github.com/wheresalice/bibliogram-docker/blob/master/.env) file to set the hostname and an email
 - Edit the [config.js](config.js) file as needed
 - Check everything is working: `docker-compose up`
 - Run Bibliogram in the background: `docker-compose up -d`
